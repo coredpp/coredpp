@@ -47,7 +47,7 @@ Since we do not want any ownership information to be disclosed by DPPs, we must 
 
 Now, a typical ETH transaction looks like this:
 
-```json
+```js
 {
   "nonce": "0x1",                 // The next transaction count for the sender
   "gasPrice": "0x09184e72a000",   // Gas price in Wei
@@ -63,7 +63,7 @@ Now, a typical ETH transaction looks like this:
 
 But just let's focus on the essentials of how an ETH transaction can represent a DPP and consider instead the following body:
 
-```json
+```js
 {
   "from": "..."                                       // The ETH address of the wallet associated with the DPP
   "to": "0x62f3dde03176d429d91ea7dda42e735849d3104f", // A fixed address that can help identify every CoreDPP DPP
@@ -153,7 +153,7 @@ Finally, we add a new field `parentEDO`, which is the IPFS hash of the previous 
 
 Once this EDO is created and placed in IPFS, a new transaction is sent to the ETH blockchain, with the following shape:
 
-```json
+```js
 {
   "from": "..."                                       // Same as in the first transaction
   "to": "0x62f3dde03176d429d91ea7dda42e735849d3104f", // Same as in the first transaction
@@ -195,7 +195,7 @@ A few things to note:
 
 As company `X` did before, company `Y` needs to send a transaction to the blockchain to update the IPFS hash.
 
-```json
+```js
 {
   "from": "..."                                       // Same as in the first transaction
   "to": "0x62f3dde03176d429d91ea7dda42e735849d3104f", // Same as in the first transaction
