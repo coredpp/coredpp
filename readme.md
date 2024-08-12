@@ -10,7 +10,7 @@ CoreDPP is based in five ideas:
 4. These data objects can be structured according to an open-ended format that can be modified and extended to become as specialized or as interoperable as required.
 5. The documents that prove the statements for the origin or transformation of a passport can also be stored onchain, but encrypted in a way that only the owners of those passports can disclose them to auditors or purchasers.
 
-CoreDPP is an initiative spearheaded by [FuelFWD](fuelfwd.io).
+CoreDPP is an initiative spearheaded by [FuelFWD](https://fuelfwd.io).
 
 Let's explain each idea by asking *why*.
 
@@ -237,7 +237,7 @@ Let's now appreciate what is enabled by the proposal above:
 
 ## License
 
-CoreDPP is spearheaded by ... and is released into the public domain.
+CoreDPP is spearheaded by [FuelFWD](https://fuelfwd.io) and is released into the public domain.
 
 ## Appendix A: creating a cryptographic wallet
 
@@ -269,3 +269,43 @@ openssl ec -in $keyName-private.pem -pubout -outform DER | tail -c 65 | xxd -p -
 rm $keyName-private.pem
 cat $keyName-public.hex | xxd -r -p | openssl dgst -sha3-256 | awk '{print "0x"substr($2,length($2)-39)}' > $keyName-address.hex
 ```
+
+
+
+
+print "Update & upgrade"
+remoteCall "apt-get update"
+remoteCall "DEBIAN_FRONTEND=noninteractive apt-get upgrade -y --with-new-pkgs"
+
+print "Set UTC as timezone"
+remoteCall "timedatectl set-timezone UTC"
+
+print "Install fail2ban"
+remoteCall "apt-get install -y fail2ban"
+
+print "Allow up to 1024 simultaneous connection requests"
+remoteCall 'grep -qxF "net.core.somaxconn=1024" /etc/sysctl.conf || echo "net.core.somaxconn=1024" >> /etc/sysctl.conf'
+
+print "Set up hostname to $HOSTNAME"
+remoteCall "echo $HOSTNAME > /etc/hostname"
+
+print "Install utilities"
+remoteCall "apt-get install -y htop sysstat neovim curl wget unzip"
+
+print "Configure neovim"
+remoteCall "mkdir /root/.config" ignoreError
+remoteCall "mkdir /root/.config/nvim" ignoreError
+remoteCall "wget https://raw.githubusercontent.com/fpereiro/vimrc/master/vimrc -O /root/.config/nvim/init.vim"
+
+print "Install git"
+remoteCall "apt-get install -y build-essential git"
+
+print "Installing nginx & certbot"
+remoteCall "apt-get install -y nginx"
+remoteCall "apt-get install -y certbot python3-certbot-nginx"
+
+print "Cloning the repo"
+remoteCall "rm -r /var/www/coredpp /root/coredpp" ignoreError
+remoteCall "git clone https://github.com/coredpp/coredpp"
+remoteCall "mv /root/coredpp /var/www"
+
