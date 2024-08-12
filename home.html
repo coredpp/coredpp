@@ -10,11 +10,13 @@
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
-        fetch('readme.md')
+
+       window.onload = function () {fetch('readme.md')
             .then(response => response.text())
             .then(text => {
                 document.getElementById('content').innerHTML = marked(text);
-            });
+            })
+       }
     </script>
 </body>
 </html>
