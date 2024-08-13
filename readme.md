@@ -66,7 +66,7 @@ But just let's focus on the essentials of how an ETH transaction can represent a
 ```js
 {
   "from": "..."                                       // The ETH address of the wallet associated with the DPP
-  "to": "0x62f3dde03176d429d91ea7dda42e735849d3104f", // A fixed address that can help identify every CoreDPP DPP
+  "to": "0x2a6eb8f7918b5016609487b1bc672767b7d90116", // A fixed address that can help identify every CoreDPP DPP
   "value": "0x0",                                     // No currency is sent; we just care about putting this entry in the blockchain
   "data": "...",                                      // IPFS hash containing the EDO (event data object)
 }
@@ -74,7 +74,7 @@ But just let's focus on the essentials of how an ETH transaction can represent a
 
 1. The `from` address is then the ETH address of a newly created wallet that is associated 1:1 with those 100 tons of soybean. In a real ETH transaction, the fields `v`, `r` and `s` can be derived from `from`.
 
-2. The `to` value is an arbitrary amount; while CoreDPP users are free to use any address here, those who would like their DPPs to be searchable could simply use the following address: `0x62f3dde03176d429d91ea7dda42e735849d3104f`.
+2. The `to` value is an arbitrary amount; while CoreDPP users are free to use any address here, those who would like their DPPs to be searchable could simply use the following address: `0x2a6eb8f7918b5016609487b1bc672767b7d90116`
 
 3. The `value` sent is 0, since we do not want to transfer wealth, just register information in the blockchain.
 
@@ -127,11 +127,13 @@ Let's continue the journey: now company `X` extracts oil from these 100 tons of 
   "product": "soybean oil",
   "emissions": {
     "Ep": {
-      "value": 10,
+      "value": 4,
       "unit": "kg CO2/GJ"
+    }
   },
   "conversionFactor": 5,
   "allocationFactor": 0.4,
+  "location": "NL",
   "certificationBody": "ISCC",
   "documents": [
     "..."
@@ -145,7 +147,7 @@ As for emissions, we add emissions for production (`Ep`).
 
 The conversion factor determines the amount of soybean oil yielded from the soybean. In this case, `100 tons of soybean / 5 = 20 tons of oil`.
 
-The allocation factor determines how are the total emissions so far (both from cultivation and processing) are going to be distributed between the soybean oil and the soybean meal. Here we are going to transfer 40% of the emissions to the soybean oil. In practice, this means that to the 30 tons per kg CO2/GJ (20 from cultivation and 10 from processing), only `30 * 0.4 = 12 kg CO2/GJ` will be assigned.
+The allocation factor determines how are the total emissions so far (both from cultivation and processing) are going to be distributed between the soybean oil and the soybean meal. Here we are going to transfer 40% of the emissions to the soybean oil. In practice, this means that to the 30 tons per kg CO2/GJ (20 from cultivation and 10 from processing), only `30 * 0.4 = 12 kg CO2/GJ` will be assigned. From the 10 tons per kg CO2/GJ of the extraction, only 40% (4) will be assigned to the soybean oil.
 
 In `documents`, rather than a sustainability declaration, we could instead add one or more PDFs that contain the certification that ISCC granted to company `X`, which certifies that company `X` is able to sustainably process soybean into soybean oil.
 
@@ -176,8 +178,10 @@ When company `Y` receives the soybean oil, it promptly converts it into biofuel.
     "Ep": {
       "value": 5,
       "unit": "kg CO2/GJ"
+    }
   },
   "conversionFactor": 1,
+  "location": "NL",
   "certificationBody": "ISCC",
   "documents": [
     "..."
@@ -213,7 +217,14 @@ Now company `Y` will transport the biodiesel. This will incur emissions, so anot
     "Etd": {
       "value": 30,
       "unit": "kg CO2/GJ"
+    }
   },
+  "means": "truck",
+  "distance": {
+    "value": 500,
+    "unit": "km"
+  }
+  "destination": "DE",
   "certificationBody": "ISCC",
   "documents": [
     "..."
@@ -227,11 +238,38 @@ As before, company `Y` needs to send a transaction to the blockchain to update t
 
 When company `Y` sells the biodiesel to company `Z`, the private key of the DPP must again be transferred.
 
-Let's now appreciate what is enabled by the proposal above:
+If company `X` so desires, it can also create a *new DPP* for the soybean meal it obtained when it separated the soybean into soybean oil and soybean meal. The EDO could look like this:
+
+```json
+{
+  "type": "extraction",
+  "product": "soybean meal",
+  "emissions": {
+    "Ep": {
+      "value": 6,
+      "unit": "kg CO2/GJ"
+    }
+  },
+  "conversionFactor": 1.25,
+  "allocationFactor": 0.6,
+  "location": "NL",
+  "certificationBody": "ISCC",
+  "documents": [
+    "..."
+  ],
+  "schema": "https://...",
+  "parentEDO": "..."
+}
+```
+
+The `parentEDO` would be the EDO of the creation of the first passport.
+
+Let's now appreciate what CoreDPP makes possible:
 
 - Anyone with the `from` address (the hex public key of the DPP) can reconstruct the entire history of the product.
-- Anyone with the `to` address (the arbitrary hex public key we suggest for all CoreDPP passport) can list all DPPs, then do the above for any products.
-- Anyone with the private key to a DPP can open all the supporting documents that prove the assertions.
+- Anyone with the `to` address (the arbitrary hex public key we suggest for all CoreDPPs) can list all DPPs, then do the above for any products.
+- Anyone with the private key to a DPP can open all the supporting documents that prove the assertions. The documents cannot be changed or tampered.
+- No ownership (or ownership transfer) is disclosed anywhere in the blockchain.
 
 ## TODO: schema
 
