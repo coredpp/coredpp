@@ -7,11 +7,12 @@
    <title>CoreDPP</title>
 </head>
 <body>
-   <div id="content" class="markdown-body" style="width: 80%; margin: auto"></div>
+   <div id="content" class="markdown-body" style="width: 80%; padding: 10px; margin: auto"></div>
 
    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
    <script>
       var load = function () {
+         if (window.innerWidth < 800) document.getElementById ('content').style.width = '90%';
          fetch ('readme.md?bustCache=' + Date.now ()).then (response => response.text ()).then (text => {
             document.getElementById ('content').innerHTML = marked.parse (text);
          })
