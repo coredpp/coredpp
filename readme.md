@@ -32,12 +32,12 @@ Following the advice implicit in Taleb's wisdom, we'll now explain CoreDPP in th
 
 Let's illustrate with the following example:
 
-1. A company `X` buys 100 tons of soybean.
-2. Company `X` extracts oil from the soybean. The result is 20 tons of soybean oil; a byproduct of the extraction is 80 tons of soybean meal.
-3. Company `X` sells the 20 tons of soybean oil to company `Y`.
-4. Company `Y` processes the soybean oil into biodiesel. The result is 20 tons of biodiesel.
-5. Company `Y` transports the biodiesel to a facility owned by company `Z`.
-6. Company `Y` sells the biodiesel to company `Z`.
+1. A company X buys 100 tons of soybean.
+2. Company X extracts oil from the soybean. The result is 20 tons of soybean oil; a byproduct of the extraction is 80 tons of soybean meal.
+3. Company X sells the 20 tons of soybean oil to company Y.
+4. Company Y processes the soybean oil into biodiesel. The result is 20 tons of biodiesel.
+5. Company Y transports the biodiesel to a facility owned by company Z.
+6. Company Y sells the biodiesel to company Z.
 
 We have to start by putting those 100 tons of soybean into a DPP. Which begets the first question: which blockchain do we use?
 
@@ -120,7 +120,7 @@ A few things to note about this EDO:
 
 Now for the interesting bit: the sustainability declaration (usually in PDF format) can be also placed in IPFS, but encrypted with the private key of the wallet that owns the DPP, so that only its owner can access the document. This is a way to prove to an auditor that the sustainability declaration was indeed received as-is at the time that the DPP was created. And, assuming that the encryption is done properly, and that quantum computers haven't rendered cryptography useless, this will not disclose any information to any third parties.
 
-Let's continue the journey: now company `X` extracts oil from these 100 tons of soybean. It then will create a new EDO that could look like this:
+Let's continue the journey: now company X extracts oil from these 100 tons of soybean. It then will create a new EDO that could look like this:
 
 ```json
 {
@@ -150,7 +150,7 @@ The conversion factor determines the amount of soybean oil yielded from the soyb
 
 The allocation factor determines how are the total emissions so far (both from cultivation and processing) are going to be distributed between the soybean oil and the soybean meal. Here we are going to transfer 40% of the emissions to the soybean oil. In practice, this means that to the 30 tons per kg CO2/GJ (20 from cultivation and 10 from processing), only `30 * 0.4 = 12 kg CO2/GJ` will be assigned. From the 10 tons per kg CO2/GJ of the extraction, only 40% (4) will be assigned to the soybean oil.
 
-In `documents`, rather than a sustainability declaration, we could instead add one or more PDFs that contain the certification that ISCC granted to company `X`, which certifies that company `X` is able to sustainably process soybean into soybean oil.
+In `documents`, rather than a sustainability declaration, we could instead add one or more PDFs that contain the certification that ISCC granted to company X, which certifies that company X is able to sustainably process soybean into soybean oil.
 
 Finally, we add a new field `parentEDO`, which is the IPFS hash of the previous EDO (the one concerned with the creation of the DPP).
 
@@ -169,7 +169,7 @@ In this way, the DPP points to the latest EDO, and previous events can be recons
 
 Note that every EDO we create will require one blockchain transaction; if the funds are distributed on demand, that means that every EDO will have the cost of two transactions (one to get the money into the wallet that controls the DPP, another one to execute the actual transaction).
 
-We're ready to continue the journey. Company `X` sells the passport to company `Y`. Now, this poses an interesting problem. Here's what both parties need:
+We're ready to continue the journey. Company X sells the passport to company Y. Now, this poses an interesting problem. Here's what both parties need:
 
 - Company X doesn't want to lose access to the documents attached to the DPP.
 - Company X doesn't want to disclose the private documents bound to the DPP, since they include trade secrets (such as supplier name and location).
@@ -194,7 +194,7 @@ Both DPPs, however, will be linked by their EDOs. Company X will first create an
 
 This will be the *final* EDO for this DPP.
 
-Company `Y` will then create a new DPP and will also create the following EDO:
+Company Y will then create a new DPP and will also create the following EDO:
 
 ```json
 {
@@ -209,7 +209,7 @@ Company `Y` will then create a new DPP and will also create the following EDO:
 
 Note that the `purchase` event has a `parentEDO`: this is the link to the EDO of the sale of the old passport. In this way, the chain of sustainability facts is unbroken. Note, however, that control over the new passport is fully in the hands of company Y. At the same time, no private information has been transferred from company X to company Y. This fulfills all the requirements we stated above.
 
-When company `Y` receives the soybean oil, it promptly converts it into biofuel. They create the following EDO:
+When company Y receives the soybean oil, it promptly converts it into biofuel. They create the following EDO:
 
 ```json
 {
@@ -238,7 +238,7 @@ A few things to note:
 - The conversion factor is 1, which means that 20 tons of soybean oil yield 20 tons of biodiesel.
 - The parent EDO is the IPFS hash of the event reflecting the extraction of soybean oil from soybean.
 
-As company `X` did before, company `Y` needs to send a transaction to the blockchain to update the IPFS hash.
+As company X did before, company Y needs to send a transaction to the blockchain to update the IPFS hash.
 
 ```js
 {
@@ -249,7 +249,7 @@ As company `X` did before, company `Y` needs to send a transaction to the blockc
 }
 ```
 
-Now company `Y` will transport the biodiesel. This will incur emissions, so another EDO is called for.
+Now company Y will transport the biodiesel. This will incur emissions, so another EDO is called for.
 
 ```json
 {
@@ -275,9 +275,9 @@ Now company `Y` will transport the biodiesel. This will incur emissions, so anot
 }
 ```
 
-As before, company `Y` needs to send a transaction to the blockchain to update the IPFS hash.
+As before, company Y needs to send a transaction to the blockchain to update the IPFS hash.
 
-When company `Y` sells the biodiesel to company `Z`, a new DPP is created. Company Y creates a final EDO for their passport:
+When company Y sells the biodiesel to company Z, a new DPP is created. Company Y creates a final EDO for their passport:
 
 ```json
 {
@@ -290,7 +290,7 @@ When company `Y` sells the biodiesel to company `Z`, a new DPP is created. Compa
 }
 ```
 
-Company `Z` will then create a new DPP and will also create the following EDO:
+Company Z will then create a new DPP and will also create the following EDO:
 
 ```json
 {
@@ -303,7 +303,7 @@ Company `Z` will then create a new DPP and will also create the following EDO:
 }
 ```
 
-One point we haven't mentioned so far: if company `X` so desires, it can also create a *new DPP* for the soybean meal it obtained when it separated the soybean into soybean oil and soybean meal. The EDO could look like this:
+One point we haven't mentioned so far: if company X so desires, it can also create a *new DPP* for the soybean meal it obtained when it separated the soybean into soybean oil and soybean meal. The EDO could look like this:
 
 ```json
 {
