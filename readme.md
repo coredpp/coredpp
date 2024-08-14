@@ -350,6 +350,10 @@ A JSON schema for the EDOs proposed in the example above is forthcoming. If you'
 
 - [TradeTrust](https://tradetrust.io): an alternative framework that leverages blockchain to digitize trade documents. The project is open source and powered by the government of Singapore. The main differences between TradeTrust and CoreDPP are: 1) there's no "public" layer of information in TradeTrust, as opposed to the public nature of the sustainability facts in CoreDPP; 2) in TradeTrust, ownership transfers are reflected in the blockchain, as opposed to CoreDPP's creation of a new DPP on ownership transfer.
 
+## Acknowledgments
+
+Thanks to Marlow Lieshout and Tim Wissel for reading our first draft and providing feedback.
+
 ## License
 
 CoreDPP is spearheaded by [FuelFWD](https://fuelfwd.io) and is released into the public domain.
