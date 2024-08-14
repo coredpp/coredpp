@@ -8,7 +8,7 @@ CoreDPP is based in five ideas:
 2. A DPP only discloses information related to sustainability (such as country of origin, type of material, emissions, etc.). It does not disclose ownership.
 3. Each event that transforms a product can have a data object attached to it, which explains the transformation it underwent.
 4. These data objects can be structured according to an open-ended format that can be modified and extended to become as specialized or as interoperable as required.
-5. The documents that prove the statements for the origin or transformation of a passport can also be stored onchain, but encrypted in a way that only the owners of those passports can disclose them to auditors or purchasers.
+5. The documents that prove the statements for the origin or transformation of a passport can also be stored onchain, but encrypted in a way that only the owners of those passports can disclose them to auditors.
 
 CoreDPP is an initiative spearheaded by [FuelFWD](https://fuelfwd.io).
 
